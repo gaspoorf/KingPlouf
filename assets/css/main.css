@@ -1,0 +1,444 @@
+/*________ LILITA ONE ________*/
+@font-face {
+    font-family: 'Lilita One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/LilitaOne/lilitaOne.woff2') format('woff2'),
+         url('../fonts/LilitaOne/lilitaOne.woff') format('woff');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: 'Lilita One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/LilitaOne/lilitaOneExt.woff2') format('woff2'),
+         url('../fonts/LilitaOne/lilitaOneExt.woff') format('woff');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* ANIMATIONS */
+/*________ APPEAR ________*/
+@keyframes appear {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    1% {
+        visibility: visible;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+/*________ DISAPPEAR ________*/
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    99% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+.appear {
+    animation: appear 0.3s ease-in-out forwards;
+}
+.disappear {
+    animation: disappear 0.3s ease-in-out forwards;
+}
+/*________ POPUP ________*/
+@keyframes popup {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+        visibility: hidden;
+    }
+    1% {
+        opacity: 0;
+        transform: scale(0);
+        visibility: visible;
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1.1);
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        visibility: visible;
+    }
+}
+/*________ SCALEY ________*/
+@keyframes scaleY {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+/*________ TRANSLATEY ________*/
+@keyframes translateY {
+    0% {
+        transform: translateY(-200%) translateX(-50%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%) translateX(-50%);
+        opacity: 1;
+    }
+}
+/*________ VARIABLES ________*/
+:root {
+    /* Colors */
+    --primaryColor: #0462D4;
+    --primaryColorDark: #003c85;
+    --primaryColorLight: #3F8FF0;
+    --secondaryColor: #FACB05;
+    --secondaryColorLight: #e3ac40;
+    --quaternaryColor: #B9B7B7;
+    --quaternaryColorDark: #939393;
+    --tertiaryColor: #D8654F;
+    --tertiaryColorRgba: rgba(216, 101, 79, 0.5);
+    --tertiaryColorDark: #9c3a2a;
+    --tertiaryColorRgbaDark: rgba(156, 58, 42, 0.5);
+    --tertiaryColorLight: #E67B67;
+    --tertiaryColorRgbaLight: rgba(230, 123, 103, 0.5);
+    --active : #ffffff;
+    --white: #ffffff;
+    --black: #000000;
+
+    --maxWidth: 480px;
+    --maxHeight: 990px;
+
+    /* Fonts */
+    --primaryFont: 'Lilita One', sans-serif;
+}
+body {
+    overflow: hidden;
+    background: var(--black);
+    height: 100vh;
+    width: 100%;
+    font-family: var(--primaryFont);
+}
+.main-container {
+    filter: brightness(0.8);
+    position: relative;
+    max-width: var(--maxWidth);
+    max-height: var(--maxHeight);
+    height: 100%;
+    width: 100%;
+}
+.main-container::before {
+    pointer-events: none;
+    content: '';
+    position: absolute;
+    top: 2.5%;
+    left: 3.75%;
+    width: 92.5%;
+    height: 95%;
+    background: rgba(255, 255, 255, 0.1);
+}
+.alert {
+    white-space: wrap;
+    position: fixed;
+    top: 3%;
+    left: 50%;
+    width: 65%;
+    transform: translateY(-200%) translateX(-50%);
+    padding: 10px 20px;
+    margin-left: 10px;
+    background: rgba(0, 0, 0, 1);
+    z-index: 5;
+    text-align: center;
+    color: var(--white);
+    font-size: 14px;
+    font-family: var(--primaryFont);
+    animation: translateY 0.6s forwards ease-in-out, disappear 0.4s forwards 5.5s ease-in-out;
+}
+.alert div {
+    top: 50%;
+    left: 0%;
+    transform: translate(-70%, -50%);
+    background: url('../images/kingplouf.webp') no-repeat center;
+    background-size: contain;
+    position: fixed;
+    width: 40px;
+    height: 56px;
+    
+}
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.primary-button, .tertiary-button {
+    transform: scale(0);
+    opacity: 0;
+    animation: popup 0.4s forwards 1s ease-in-out;
+    z-index: 4;
+    -webkit-tap-highlight-color: transparent;
+    background-color: var(--primaryColor);  
+    font-family: var(--primaryFont);
+    border: none;
+    border-radius: 30px;
+    padding: 10px 30px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 18px;
+    color: var(--white);
+}
+.tertiary-button {
+    background-color: var(--tertiaryColorRgba);
+}
+.primary-button:hover {
+    transition: all 0.3s;
+    background-color: var(--primaryColorDark);
+}
+.tertiary-button:hover {
+    transition: all 0.3s;
+    background-color: var(--tertiaryColorRgbaDark);
+}
+.primary-button:active, .tertiary-button:active {
+    transition: all 0.3s;
+    transform: scale(0.8);
+}
+.primary-button:active {
+    background-color: var(--primaryColorLight);
+}
+.tertiary-button:active {
+    background-color: var(--tertiaryColorRgbaLight);
+}
+/*________ :VISITED ________*/
+.primary-button:visited, .tertiary-button:visited {
+    color: var(--white);
+}
+
+.no-select {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.flex-center-center {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.flex-between-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-column {
+    flex-direction: column;
+}
+/*________ INDEX ________*/
+.index .title {
+    background: rgba(0, 0, 0, 0.5);
+    animation: scaleY 0.4s forwards ease-in-out;
+    transform: scaleY(0);
+    position: relative;
+    padding: 30px 40px;
+    opacity: 0.9;
+    height: 400px;
+}
+
+.index h1 {
+    transform: scale(0);
+    opacity: 0;
+    animation: popup 0.4s forwards 0.6s ease-in-out;
+    text-transform: uppercase;
+    font-size: 96px;
+    color: var(--secondaryColor);
+    line-height: 66px;
+    width: 224px;
+    text-align:center;
+}
+.index h1 span {
+    font-size: 80px;
+    color: var(--primaryColor);
+}
+.index .primary-button {
+    margin-top: 20px;
+}
+.quote {
+    width: 70%;
+    margin-top: 40px;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(209, 209, 209, 0.5);
+    text-align: center;
+    animation: appear 1s forwards 1.4s ease-in-out;
+    opacity: 0;
+}
+/*________ REIGN ________*/
+.reign {
+    gap: 30px;
+}
+.reign h1 {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 60px;
+    color: var(--secondaryColor);
+    text-align:center;
+}
+.reign .title {
+    transition: all 0.4s;
+    opacity: 0;
+    z-index: 3;
+}
+.reign .title p {
+    font-size: 16px;
+    width: 70%;
+    color: rgba(209, 209, 209, 0.9);
+    text-align: center;
+}
+.themes {
+    animation: scaleY 0.4s forwards ease-in-out;
+    transform: scaleY(0);
+    z-index: 2;
+    padding: 15px 0px;
+    border-radius: 25px;
+    gap: 25px;
+    width: 90%;
+    flex-wrap: wrap;
+}
+.theme {
+    cursor: pointer;
+    position: relative;
+    height: 100px;
+    padding: 12px 10px;
+    font-family: var(--primaryFont);
+    background: rgba(0, 0, 0, 0.5);
+    transition: all 0.4s;
+}
+.theme h3 {
+    font-size: 14px;
+    color: var(--quaternaryColorDark);
+    text-align: center;
+}
+.theme.active h3 {
+    color: var(--white);
+}
+.theme form input[type="submit"] {
+    opacity: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
+.theme.inactive {
+    filter: grayscale(100%);
+    transition: all 0.4s;
+}
+.theme.active {
+    background: rgba(255, 255, 255, 0.2);
+    filter: grayscale(0%);
+    transition: all 0.4s;
+}
+.theme:hover {
+    filter: grayscale(100%) brightness(1.2);
+    transition: all 0.4s;
+}
+.theme.active:hover {
+    filter: grayscale(0%) brightness(0.8);
+    transition: all 0.4s;
+}
+.theme:active {
+    transform: scale(0.8);
+    filter: grayscale(100%) brightness(1.5);
+    transition: all 0.4s;
+}
+video {
+    opacity: 0.8;
+    width: 105%;
+    height: 105%;
+    object-fit: cover;
+    position: absolute;
+    top: -2.5%;
+    left: -2.5%;
+    z-index: 1;
+    pointer-events: none;
+    transition: all 1s;
+}
+#video-medieval {
+    filter: blur(10px) saturate(1) brightness(0.7) contrast(1);
+}
+#video-classical {
+    filter: blur(5px) brightness(0.8);
+}
+#video-electro {
+    filter: blur(5px) saturate(1.2) brightness(0.8) contrast(1.2) hue-rotate(50deg);
+}
+#video-space {
+    filter: blur(5px) brightness(0.8);
+}
+#video-zen {
+    filter: blur(5px) brightness(0.8);
+}
+#video-hardcore {
+    filter: blur(5px) saturate(1.5) brightness(0.8) contrast(1.5);
+}
+#video-reggae {
+    filter: blur(10px) saturate(1.5) contrast(1) brightness(0.8);
+}
+@media screen and (max-width: 417px) {
+    .index .title {
+        height: 325px;
+        padding: 20px;
+    }
+    .index h1 {
+        font-size: 70px;
+        line-height: 48px;
+    }
+    .index h1 span {
+        font-size: 60px;
+    }
+    .index .title img {
+        width: 100px;
+        height: auto;
+    }
+    .themes {
+        gap: 15px;
+        padding: 15px 0px;
+    }
+    .theme {
+        height: 100px;
+    }
+}
+@media screen and (max-width: 385px) {
+    .themes {
+        gap: 15px;
+        padding: 5px 0px;
+    }
+    .theme {
+        padding: 5px;
+        height: 80px;
+    }
+    .theme h3 {
+        font-size: 10px;
+    }
+    .theme img {
+        width: 40px;
+        height: auto;
+    }
+}
